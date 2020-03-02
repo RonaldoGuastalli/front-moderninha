@@ -1,0 +1,43 @@
+<div class="container">
+
+    <form [formGroup]="formPayment" (ngSubmit)="onSubmit()"> <br>
+
+        <div class="form-group col-md-6">
+            <label for="type">Type</label>
+            <select class="custom-select" id="type" formControlName="type">
+
+                <option value="1">Crédito</option>
+                <option value="2">Débito</option>
+                <option value="3">Voucher</option>
+
+            </select>
+        </div>
+
+        <div class="form-group col-md-6">
+            <label for="type">Installment Type</label>
+            <select class="custom-select" id="installmentType" formControlName="installmentType">
+
+                <option value="1">À Vista</option>
+                <option value="2">Parcelado Vendedor</option>
+                <option value="3">Parcelado Comprador</option>
+
+            </select>
+        </div>
+
+        <div class="form-group col-md-6">
+            <label for="amount">Amount</label>
+            <input mask="00,00" type="text" class="form-control" name="amount" id="amount" formControlName="amount"
+                required>
+        </div>
+
+        <div class="form-group col-md-6">
+            <label for="type">User Reference</label>
+            <input type="text" class="form-control" name="userReference" id="userReference"
+                formControlName="userReference" required>
+        </div>
+
+        <input type="submit" class="btn btn-primary mt-4" [disabled]="formPayment.invalid" value="Enviar">
+    </form>
+
+
+</div>
