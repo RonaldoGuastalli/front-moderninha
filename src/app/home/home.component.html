@@ -1,10 +1,10 @@
-<div class="container">
+<div class="container col-md-4"><br>
 
-    <form [formGroup]="formPayment" (ngSubmit)="onSubmit()"> <br>
+    <form [formGroup]="formPayment" (ngSubmit)="onSubmit()">
 
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-12">
             <label for="type">Type</label>
-            <select class="custom-select" id="type" formControlName="type">
+            <select class="custom-select" id="type" formControlName="type" (change)="getType()">
 
                 <option value="1">Crédito</option>
                 <option value="2">Débito</option>
@@ -13,31 +13,68 @@
             </select>
         </div>
 
-        <div class="form-group col-md-6">
-            <label for="type">Installment Type</label>
-            <select class="custom-select" id="installmentType" formControlName="installmentType">
+        <div class="form-group col-md-12" *ngIf="type == 1">
+            <label for="installmentType">Installment Type</label>
+            <select class="custom-select" id="installmentType" formControlName="installmentType"
+                (change)="getInstallmentType()">
 
-                <option value="1">À Vista</option>
+                <option value="1">À Vista (1x)</option>
                 <option value="2">Parcelado Vendedor</option>
                 <option value="3">Parcelado Comprador</option>
 
             </select>
+
+            <!-- PARCELADO VENDEDOR -->
+            <div *ngIf="installmentType == 2" class="row col-md-4">
+                <label for="installmentType"><br>Installment</label>
+                <select class="custom-select" id="installment" formControlName="installment">
+
+                    <option value="2">2x</option>
+                    <option value="3">3x</option>
+                    <option value="4">4x</option>
+                    <option value="5">5x</option>
+                    <option value="6">6x</option>
+
+                </select>
+            </div>
+
+            <!-- PARCELADO COMPRADOR -->
+            <div *ngIf="installmentType == 3" class="row col-md-4">
+                <label for="installmentType"><br>Installment</label>
+                <select class="custom-select" id="installment" formControlName="installment">
+
+                    <option value="2">2x</option>
+                    <option value="3">3x</option>
+                    <option value="4">4x</option>
+                    <option value="5">5x</option>
+                    <option value="6">6x</option>
+
+                </select>
+            </div>
+
         </div>
 
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-12">
             <label for="amount">Amount</label>
-            <input mask="00,00" type="text" class="form-control" name="amount" id="amount" formControlName="amount"
-                required>
+            <div class="input-group ">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">R$</span>
+                </div>
+                <input mask="0,00" type="text" class="form-control" name="amount" id="amount" formControlName="amount"
+                    required>
+            </div>
+
         </div>
 
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-12">
             <label for="type">User Reference</label>
             <input type="text" class="form-control" name="userReference" id="userReference"
                 formControlName="userReference" required>
         </div>
 
-        <input type="submit" class="btn btn-primary mt-4" [disabled]="formPayment.invalid" value="Enviar">
+        <div align="center">
+            <input type="submit" class="btn btn-primary btn-lg btn-block" [disabled]="formPayment.invalid"
+                value="Enviar">
+        </div><br>
     </form>
-
-
 </div>
