@@ -30,6 +30,9 @@ export class HomeComponent implements OnInit {
 
   onSubmit() {
     console.log(this.formPayment.value)
+
+    //console.log("Mostrando valor do Type original: ", this.formPayment.controls.type.value, " Mostrando com parseInt: ",
+    //parseInt(this.formPayment.controls.type.value))
   }
 
   getType() {
