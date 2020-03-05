@@ -1,7 +1,7 @@
 export class PaymentData {
-    type: number;
-    installmentType: number;
-    installment: number;
-    amount: number;
-    userReference: string;
+    mType: number;
+    mInstallmentType: number;
+    mInstallment: number;
+    mAmount: number;
+    mUserReference: string;
 }

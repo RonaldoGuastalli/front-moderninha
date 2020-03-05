@@ -20,11 +20,13 @@ export class HomeComponent implements OnInit {
   createForm(paymentData: PaymentData) {
 
     this.formPayment = new FormGroup({
-      type: new FormControl(paymentData.type, [Validators.required]),
-      installmentType: new FormControl(paymentData.installmentType, [Validators.required]),
-      installment: new FormControl(paymentData.installment, [Validators.required]),
-      amount: new FormControl(paymentData.amount),
-      userReference: new FormControl("CODVENDA")
+
+      mType: new FormControl(paymentData.mType, [Validators.required]),
+      mInstallmentType: new FormControl(paymentData.mInstallmentType, [Validators.required]),
+      mInstallment: new FormControl(paymentData.mInstallment, [Validators.required]),
+      mAmount: new FormControl(paymentData.mAmount),
+      mUserReference: new FormControl("CODVENDA")
+
     })
   }
 
@@ -44,8 +46,8 @@ export class HomeComponent implements OnInit {
   }
 
   getType() {
-    this.type = this.formPayment.controls.type.value;
-    this.formPayment.controls.installmentType.setValue(null);
+    this.type = this.formPayment.controls.mType.value;
+    this.formPayment.controls.mInstallmentType.setValue(null);
 
     if (this.type == 2 || this.type == 3) {
       this.setType();
@@ -55,8 +57,8 @@ export class HomeComponent implements OnInit {
   }
 
   getInstallmentType() {
-    this.formPayment.controls.installment.setValue(null);
-    this.installmentType = this.formPayment.controls.installmentType.value;
+    this.formPayment.controls.mInstallment.setValue(null);
+    this.installmentType = this.formPayment.controls.mInstallmentType.value;
 
     if (this.installmentType == 1) {
       this.setType();
@@ -69,29 +71,29 @@ export class HomeComponent implements OnInit {
   }
 
   private setInstallmentType() {
-    this.formPayment.controls.installmentType.setValue(parseInt(this.formPayment.controls.installmentType.value));
+    this.formPayment.controls.mInstallmentType.setValue(parseInt(this.formPayment.controls.mInstallmentType.value));
   }
 
   private setType() {
-    this.formPayment.controls.type.setValue(parseInt(this.formPayment.controls.type.value));
+    this.formPayment.controls.mType.setValue(parseInt(this.formPayment.controls.mType.value));
   }
 
   private setInstallment() {
-    this.formPayment.controls.installment.setValue(parseInt(this.formPayment.controls.installment.value));
+    this.formPayment.controls.mInstallment.setValue(parseInt(this.formPayment.controls.mInstallment.value));
   }
 
   private setInstallmentTypeValue1() {
-    this.formPayment.controls.installmentType.setValue(1);
+    this.formPayment.controls.mInstallmentType.setValue(1);
   }
 
   private setInstallmentValue1() {
-    this.formPayment.controls.installment.setValue(1);
+    this.formPayment.controls.mInstallment.setValue(1);
   }
   private setAmount() {
-    this.formPayment.controls.amount.setValue(parseInt(this.formPayment.controls.amount.value));
+    this.formPayment.controls.mAmount.setValue(parseInt(this.formPayment.controls.mAmount.value));
   }
 
   private checkAmount() {
-    return this.formPayment.controls.amount.value == 0;
+    return this.formPayment.controls.mAmount.value == 0;
   }
 }
