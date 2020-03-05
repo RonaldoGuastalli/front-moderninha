@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { PaymentData } from './paymentData'
+import { PaymentData } from './paymentData';
 
 @Component({
   selector: 'app-home',
