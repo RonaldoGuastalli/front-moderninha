@@ -5,9 +5,9 @@ const http = require('http');
 const path = require('path');
 const app = express();
 // Serve only the static files from the dist directory
-app.use(express.static(__dirname + '/dist'));
+app.use(express.static(__dirname + '/dist/front-moderninha'));
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist/index.html'));
+  res.sendFile(path.join(__dirname, 'dist/front-moderninha/index.html'));
 });
 const port = process.env.PORT || 8080;
 app.set(port);
