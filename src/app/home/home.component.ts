@@ -10,11 +10,37 @@ export class HomeComponent implements OnInit {
   formPayment: FormGroup;
   type: number;
   installmentType: number;
+  socket: WebSocket;
 
-  constructor() { }
+  constructor() {
+    this.socket = new WebSocket('ws://localhost:6060');
+  }
 
   ngOnInit(): void {
     this.createForm(new PaymentData());
+    this.connectWs();
+  }
+
+  connectWs() {
+    this.socket.onopen = () => {
+      alert('[open] Connection established');
+      alert('Sending to server');
+    };
+    this.socket.onmessage = (event) => {
+      alert(`[message] Data received from server: ${event.data}`);
+    };
+    this.socket.onclose = event => {
+      if (event.wasClean) {
+        alert(`[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`);
+      } else {
+        // e.g. server process killed or network down
+        // event.code is usually 1006 in this case
+        alert('[close] Connection died');
+      }
+    };
+    this.socket.onerror = error => {
+      alert(`[error] ${error}`);
+    };
   }
 
   createForm(paymentData: PaymentData) {
@@ -25,9 +51,9 @@ export class HomeComponent implements OnInit {
       mInstallmentType: new FormControl(paymentData.mInstallmentType, [Validators.required]),
       mInstallment: new FormControl(paymentData.mInstallment, [Validators.required]),
       mAmount: new FormControl(paymentData.mAmount),
-      mUserReference: new FormControl("CODVENDA")
+      mUserReference: new FormControl('CODVENDA')
 
-    })
+    });
   }
 
   onSubmit() {
@@ -37,11 +63,14 @@ export class HomeComponent implements OnInit {
     } else {
 
       this.setAmount();
-      if (this.installmentType != 1)
+      if (this.installmentType != 1) {
         this.setInstallment();
+      }
 
       //Implementar: Enviar o Objeto via: WS && HTTP
-      console.log(this.formPayment.value)
+
+      this.socket.send(this.formPayment.value);
+      console.log(this.formPayment.value);
     }
   }
 
