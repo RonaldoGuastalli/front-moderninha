@@ -69,7 +69,7 @@ export class HomeComponent implements OnInit {
 
       //Implementar: Enviar o Objeto via: WS && HTTP
 
-      this.socket.send(this.formPayment.value);
+      this.socket.send(JSON.stringify(this.formPayment.value));
       console.log(this.formPayment.value);
     }
   }
