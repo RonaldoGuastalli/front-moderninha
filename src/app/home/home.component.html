@@ -72,8 +72,30 @@
                 formControlName="mUserReference" required>
         </div>
 
+        <!-- valores fixos -->
+        <div class="form-group col-md-12">
+          <label for="companyOperate">Adquirente</label>
+          <input type="text" class="form-control" name="companyOperate" id="companyOperate" formControlName="companyOperate"
+            required>
+        </div>
+
+        <div class="form-group col-md-12">
+          <label for="operation">Operação</label>
+          <input type="text" class="form-control" name="operation" id="operation" formControlName="operation" required>
+        </div>
+
+        <div class="form-group col-md-12">
+          <label for="userId">Id Usuário</label>
+          <input type="text" class="form-control" name="userId" id="userId" formControlName="userId" required>
+        </div>
+
+        <div class="form-group col-md-12">
+          <label for="messageType">Id Usuário</label>
+          <input type="text" class="form-control" name="messageType" id="messageType" formControlName="messageType" required>
+        </div>
+
         <div align="center">
-            <input type="submit" class="btn btn-primary btn-lg btn-block" [disabled]="formPayment.invalid"
+            <input type="submit" class="btn btn-primary btn-lg btn-block"
                 value="Enviar">
         </div><br>
     </form>

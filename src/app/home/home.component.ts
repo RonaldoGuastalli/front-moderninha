@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { PaymentData } from './paymentData';
+import { Body } from './body';
 
 @Component({
   selector: 'app-home',
@@ -11,13 +12,16 @@ export class HomeComponent implements OnInit {
   type: number;
   installmentType: number;
   socket: WebSocket;
+  body: Body;
+  paymentData: PaymentData;
 
   constructor() {
+    this.paymentData = new PaymentData();
     this.socket = new WebSocket('ws://localhost:6060');
   }
 
   ngOnInit(): void {
-    this.createForm(new PaymentData());
+    this.createForm();
     this.connectWs();
   }
 
@@ -43,16 +47,17 @@ export class HomeComponent implements OnInit {
     };
   }
 
-  createForm(paymentData: PaymentData) {
-
+  createForm() {
     this.formPayment = new FormGroup({
-
-      mType: new FormControl(paymentData.mType, [Validators.required]),
-      mInstallmentType: new FormControl(paymentData.mInstallmentType, [Validators.required]),
-      mInstallment: new FormControl(paymentData.mInstallment, [Validators.required]),
-      mAmount: new FormControl(paymentData.mAmount),
-      mUserReference: new FormControl('CODVENDA')
-
+      mType: new FormControl(this.paymentData.body.type, [Validators.required]),
+      mInstallmentType: new FormControl(this.paymentData.body.installmentType, [Validators.required]),
+      mInstallment: new FormControl(this.paymentData.body.installment, [Validators.required]),
+      mAmount: new FormControl(this.paymentData.body.amount),
+      mUserReference: new FormControl('CODVENDA'),
+      companyOperate: new FormControl(this.paymentData.body.companyOperate = 'PAGSEGURO'),
+      operation: new FormControl(this.paymentData.body.operation = 'PAGAMENTO'),
+      userId: new FormControl(this.paymentData.userId = 123),
+      messageType: new FormControl(this.paymentData.messageType = 'MOBILE_PAYMENT')
     });
   }
 
@@ -63,13 +68,13 @@ export class HomeComponent implements OnInit {
     } else {
 
       this.setAmount();
-      if (this.installmentType != 1) {
+      if (this.installmentType !== 1) {
         this.setInstallment();
       }
 
       //Implementar: Enviar o Objeto via: WS && HTTP
 
-      this.socket.send(this.formPayment.value);
+      this.socket.send(JSON.stringify(this.paymentData));
       console.log(this.formPayment.value);
     }
   }
@@ -78,7 +83,7 @@ export class HomeComponent implements OnInit {
     this.type = this.formPayment.controls.mType.value;
     this.formPayment.controls.mInstallmentType.setValue(null);
 
-    if (this.type == 2 || this.type == 3) {
+    if (this.type === 2 || this.type === 3) {
       this.setType();
       this.setInstallmentTypeValue1();
       this.setInstallmentValue1();
@@ -89,7 +94,7 @@ export class HomeComponent implements OnInit {
     this.formPayment.controls.mInstallment.setValue(null);
     this.installmentType = this.formPayment.controls.mInstallmentType.value;
 
-    if (this.installmentType == 1) {
+    if (this.installmentType === 1) {
       this.setType();
       this.setInstallmentType();
       this.setInstallmentValue1();
@@ -119,10 +124,11 @@ export class HomeComponent implements OnInit {
     this.formPayment.controls.mInstallment.setValue(1);
   }
   private setAmount() {
+    // tslint:disable-next-line:radix
     this.formPayment.controls.mAmount.setValue(parseInt(this.formPayment.controls.mAmount.value));
   }
 
   private checkAmount() {
-    return this.formPayment.controls.mAmount.value == 0;
+    return this.formPayment.controls.mAmount.value === 0;
   }
 }
